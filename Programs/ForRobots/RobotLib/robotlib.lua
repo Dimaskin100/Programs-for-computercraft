@@ -1,7 +1,7 @@
 local robotlib = {}
 
 if fs.exists("mif.lua") == false then
-shell.run("wget ")
+shell.run("wget https://raw.githubusercontent.com/Dimaskin100/Programs-for-computercraft/refs/heads/main/Programs/ForComputers/mif.lua")
 end
 
 local mif = require("mif")
