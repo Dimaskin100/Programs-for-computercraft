@@ -2,7 +2,7 @@ local mif = {}
 
 local np = nil
 
-local function check(number, name)
+local function check(number, name1)
 
     if np == nil then
         return false
@@ -16,8 +16,8 @@ if fs.exists("variables") == false and number >= 1 then
         fs.makeDir("variables/"..np)
     end
 
-    if fs.exists("variables/"..np.."/"..name) == false and number >= 3 then
-        io.open("variables/"..np.."/"..name, "w"):close()
+    if fs.exists("variables/"..np.."/"..name1) == false and number >= 3 then
+        io.open("variables/"..np.."/"..name1, "w"):close()
     end
 
     return true
