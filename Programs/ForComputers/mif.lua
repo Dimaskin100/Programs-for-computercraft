@@ -2,7 +2,9 @@ local mif = {}
 
 local np = nil
 
-local function check(number, name2)
+local function check(number, name1)
+
+    print(name1)
 
     if np == nil then
         return false
@@ -16,8 +18,8 @@ if fs.exists("variables") == false and number >= 1 then
         fs.makeDir("variables/"..np)
     end
 
-    if fs.exists("variables/"..np.."/"..name2) == false and number >= 3 then
-        io.open("variables/"..np.."/"..name2, "w"):close()
+    if fs.exists("variables/"..np.."/"..name1) == false and number >= 3 then
+        io.open("variables/"..np.."/"..name1, "w"):close()
     end
 
     return true
@@ -30,8 +32,7 @@ function mif.program(name)
 end
 
 function mif.get(name)
-    local name1 = name
-    local answer = check(3, name1) if answer == false then return false end
+    local answer = check(3, name) if answer == false then return false end
 
     local file = io.open(name, "r")
     local text = file:read("*a")
@@ -41,8 +42,7 @@ function mif.get(name)
 end
 
 function mif.set(name, set)
-    local name1 = name
-    local answer = check(3, name1) if answer == false then return false end
+    local answer = check(3, name) if answer == false then return false end
 
     local file = io.open(name, "w")
     file:write(set)
