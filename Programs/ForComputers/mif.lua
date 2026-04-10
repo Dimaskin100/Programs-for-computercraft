@@ -1,83 +1,84 @@
 local mif = {}
 
 local np = nil
-local name = nil
 
-local function check(number)
-
-    print(name1)
-
+local function check(number, name)
     if np == nil then
         return false
     end
 
-if fs.exists("variables") == false and number >= 1 then
+    if number >= 1 and not fs.exists("variables") then
         fs.makeDir("variables")
     end
 
-    if fs.exists("variables/"..np) == false and number >= 2 then
+    if number >= 2 and not fs.exists("variables/"..np) then
         fs.makeDir("variables/"..np)
     end
 
-    if fs.exists("variables/"..np.."/"..name) == false and number >= 3 then
-        io.open("variables/"..np.."/"..name, "w"):close()
+    if number >= 3 and not fs.exists("variables/"..np.."/"..name) then
+        local file = io.open("variables/"..np.."/"..name, "w")
+        if file then
+            file:close()
+        else
+            return false
+        end
     end
 
     return true
 end
 
-function mif.program(name1)
-    np = tostring(name1)
-    check(2)
-    return true
+function mif.program(name)
+    if name == nil or name == "" then return false end
+    np = tostring(name)
+    return check(2)
 end
 
-function mif.get(name1)
-    name = name1
-    local answer = check(3, name) if answer == false then return false end
+function mif.get(name)
+    if not check(3, name) then return false end
 
-    local file = io.open(name, "r")
+    local filePath = "variables/"..np.."/"..name
+    local file = io.open(filePath, "r")
+    if not file then return false end
+
     local text = file:read("*a")
     file:close()
-
     return text
 end
 
-function mif.set(name1, set)
-    name = name1
-    local answer = check(3, name) if answer == false then return false end
+function mif.set(name, value)
+    if not check(3, name) then return false end
 
-    local file = io.open(name, "w")
-    file:write(set)
-    file:flush() file:close()
+    local filePath = "variables/"..np.."/"..name
+    local file = io.open(filePath, "w")
+    if not file then return false end
 
+    file:write(value)
+    file:flush()
+    file:close()
     return true
 end
 
-function mif.delete(name1)
-    name = name1
-    local answer = check(2) if answer == false then return false end
-
-    if fs.exists("variables/"..np.."/"..name) then
-    fs.delete("variables/"..np.."/"..name)
+function mif.delete(name)
+    local filePath = "variables/"..np.."/"..name
+    if fs.exists(filePath) then
+        fs.delete(filePath)
+        return true
     else
         return false
     end
-
-    return true
 end
 
 function mif.deleteProgram()
-    local answer = check(1) if answer == false then return false end
+    if np == nil then return false end
 
-    if fs.exists("variables/"..np) then
-    fs.delete("variables/"..np)
-    np = nil
+    local dirPath = "variables/"..np
+    if fs.exists(dirPath) then
+        fs.delete(dirPath)
+        np = nil
+        return true
     else
         return false
     end
-
-    return true
 end
 
 return mif
