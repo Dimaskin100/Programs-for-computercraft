@@ -47,7 +47,7 @@ if v.msg == false then
 end
 
 while true do
-    if rs.getOutput("left") >= 1 then
+    if rs.getOutput("left") == true then
         r.send("r", true) r.send("r", true)
         
         for i = 2, 15 do
