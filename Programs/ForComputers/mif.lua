@@ -1,7 +1,7 @@
 local mif = {}
 
+-- This library for ComputerCraft
 -- MIF - Memory In Files
--- This libary for ComputerCraft
 
 local np = nil
 
