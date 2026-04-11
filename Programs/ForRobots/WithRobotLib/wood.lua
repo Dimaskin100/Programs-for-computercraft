@@ -31,23 +31,15 @@ end
     mif.set("robots", text)
 else
     for word in string.gmatch(robots1, "([^:]+)") do
-    table.insert(robots, word)
+    table.insert(robots, tonumber(word))
 end
-end
-
-print("Write ID robots:")
-local robotsID = io.read()
-
-term.clear()
-
-for txt in string.gmatch(robotsID, "%S+") do
-table.insert(robots, tonumber(txt))
 end
 
 answer = r.connect(robots)
 
 for k, v in pairs(answer) do
 if v.msg == false then
+    mif.set("robots", "")
     r.disconnect()
     print("Error")
     exit()
@@ -55,10 +47,14 @@ if v.msg == false then
 end
 
 while true do
-    if rs.getOutput() >= 1 then
+    if rs.getOutput("left") >= 1 then
         r.send("r", true) r.send("r", true)
         
-        r.send("sel 2", true) r.send("dr", true) r.send("sel 1", true)
+        for i = 2, 15 do
+            r.send("sel "..i, true)
+            r.send("dr", true)
+        end
+        r.send("sel 1", true)
 
         r.send("r", true) r.send("r", true)
     end
