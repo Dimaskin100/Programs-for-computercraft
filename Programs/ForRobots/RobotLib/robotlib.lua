@@ -93,6 +93,14 @@ function robotlib.send(command, to)
     return answers
 end
 
+function robotlib.getRobots()
+    if #robots == 0 then
+        return false
+    end
+
+    return robots
+end
+
 function robotlib.searchRobot(robots1)
     local answers = {}
 
