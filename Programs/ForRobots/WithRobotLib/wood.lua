@@ -29,13 +29,8 @@ end
         end
     end
     mif.set("robots", text)
-else
-    for word in string.gmatch(robots1, "([^:]+)") do
-    table.insert(robots, tonumber(word))
-end
-end
 
-answer = r.connect(robots)
+    answer = r.connect(robots)
 
 for k, v in pairs(answer) do
 if v.msg == false then
@@ -43,6 +38,12 @@ if v.msg == false then
     r.disconnect()
     print("Error")
   end
+end
+    
+else
+    for word in string.gmatch(robots1, "([^:]+)") do
+    table.insert(robots, tonumber(word))
+end
 end
 
 if not mif.get("robots") == "" then
