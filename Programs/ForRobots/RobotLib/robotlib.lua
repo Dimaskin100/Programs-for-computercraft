@@ -8,6 +8,8 @@ if fs.exists("startup.lua") == false then
 shell.run("wget https://raw.githubusercontent.com/Dimaskin100/Programs-for-computercraft/refs/heads/main/Programs/ForComputers/startup.lua")
 end
 
+term.clear()
+
 local mif = require("mif")
 
 mif.program("robotlib")
@@ -139,7 +141,3 @@ function robotlib.disconnect()
 end
 
 return robotlib
-
-
-
-
