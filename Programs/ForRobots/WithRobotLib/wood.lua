@@ -1,8 +1,39 @@
+local r = require("robotlib")
+local mif = require("mif")
+
+mif.program("startup")
+mif.set("program", "wood.lua")
+
+mif.program("wood")
+
+local robots = {}
+local robots1 = mif.get("robots")
+local answer = nil
+
+if robots1 == "" then
+    print("Write ID robots:")
+local robotsID = io.read()
+
 term.clear()
 
-local r = require("robotlib")
-local robots = {}
-local answer = nil
+for txt in string.gmatch(robotsID, "%S+") do
+table.insert(robots, tonumber(txt))
+end
+
+    local text = ""
+    for k, v in pairs(robots) do
+        if k == 1 then
+           text = v
+           else
+            text = text..":"..v
+        end
+    end
+    mif.set("robots", text)
+else
+    for word in string.gmatch(robots1, "([^:]+)") do
+    table.insert(robots, word)
+end
+end
 
 print("Write ID robots:")
 local robotsID = io.read()
@@ -24,6 +55,14 @@ if v.msg == false then
 end
 
 while true do
+    if rs.getOutput() >= 1 then
+        r.send("r", true) r.send("r", true)
+        
+        r.send("sel 2", true) r.send("dr", true) r.send("sel 1", true)
+
+        r.send("r", true) r.send("r", true)
+    end
+    
 answer = r.send("dt", true)
 
   for k, v in pairs(answer) do
