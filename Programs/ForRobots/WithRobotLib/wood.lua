@@ -46,7 +46,8 @@ else
 end
 end
 
-if not mif.get("robots") == "" then
+if mif.get("robots") == "" then
+else
 while true do
     if rs.getOutput("left") == true then
         r.send("r", true) r.send("r", true)
