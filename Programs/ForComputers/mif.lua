@@ -1,18 +1,21 @@
 local mif = {}
 
+-- MIF - Memory In Files
+-- This libary for ComputerCraft
+
 local np = nil
 
 local function check(number, name)
-    if np == nil then
-        return false
-    end
+    if np == nil then return false end
 
     if number >= 1 and not fs.exists("variables") then
-        fs.makeDir("variables")
+        local answer = fs.makeDir("variables")
+        if answer == false then return false end
     end
 
     if number >= 2 and not fs.exists("variables/"..np) then
-        fs.makeDir("variables/"..np)
+        local answer = fs.makeDir("variables/"..np)
+        if answer == false then return false end
     end
 
     if number >= 3 and not fs.exists("variables/"..np.."/"..name) then
@@ -41,6 +44,7 @@ function mif.get(name)
     if not file then return false end
 
     local text = file:read("*a")
+    
     file:close()
     return text
 end
@@ -54,11 +58,14 @@ function mif.set(name, value)
 
     file:write(value)
     file:flush()
+    
     file:close()
     return true
 end
 
 function mif.delete(name)
+    if not check(2, name) then return false end
+    
     local filePath = "variables/"..np.."/"..name
     if fs.exists(filePath) then
         fs.delete(filePath)
@@ -69,7 +76,7 @@ function mif.delete(name)
 end
 
 function mif.deleteProgram()
-    if np == nil then return false end
+    if not check(1, name) then return false end
 
     local dirPath = "variables/"..np
     if fs.exists(dirPath) then
