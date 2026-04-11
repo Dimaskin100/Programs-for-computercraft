@@ -42,10 +42,10 @@ if v.msg == false then
     mif.set("robots", "")
     r.disconnect()
     print("Error")
-    exit()
   end
 end
 
+if not mif.get("robots") == "" then
 while true do
     if rs.getOutput("left") == true then
         r.send("r", true) r.send("r", true)
@@ -81,4 +81,5 @@ r.send("d", v.id)
     end
   end
   
+end
 end
