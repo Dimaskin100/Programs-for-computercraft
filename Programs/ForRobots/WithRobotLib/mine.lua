@@ -2,6 +2,11 @@ term.clear()
 
 sleep(1)
 
+local r = require("robotlib")
+
+local robots = {}
+local answer = nil
+
 local mif = require("mif")
 
 mif.program("startup")
@@ -13,18 +18,15 @@ end
 mif.program("mine")
 if mif.get("number") == false then
 mif.set("number", 0)
+sleep(0.1)
 mif.set("i", 0)
+sleep(0.1)
 mif.set("d", 0)
+sleep(0.1)
 mif.set("u", 0)
 end
 
-local r = require("robotlib")
-
-local robots = {}
-local answer = nil
-
 if r.getRobots() == false then
-else
 
 print("Write ID robots:")
 local robotsID = io.read()
@@ -41,15 +43,18 @@ for k, v in pairs(answer) do
 if v.msg == false then
     r.disconnect()
     print("Error connect")
-        while true do io.read() end
+    while true do io.read() end
   end
 end
 
 end
 
 local number = tonumber(mif.get("number"))
+sleep(0.1)
 local i = tonumber(mif.get("i"))
+sleep(0.1)
 local d = tonumber(mif.get("d"))
+sleep(0.1)
 local u = tonumber(mif.get("u"))
 
 while true do
@@ -63,12 +68,12 @@ term.clear()
 
         if number == nil then
             r.disconnect()
-    print("Error connect")
+    print("Error number")
         while true do io.read() end
         end
 
         mif.set("number", number)
-    else
+    end
 
     while i <= number do
 
@@ -112,4 +117,3 @@ mif.set("i", 0)
 mif.set("d", 0)
 mif.set("u", 0)
     end
-end
