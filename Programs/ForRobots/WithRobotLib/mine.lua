@@ -1,8 +1,30 @@
 term.clear()
 
+sleep(1)
+
+local mif = require("mif")
+
+mif.program("startup")
+if mif.get("program") == "mine.lua" then
+else
+    mif.set("program", "mine.lua")
+end
+
+mif.program("mine")
+if mif.get("number") == false then
+mif.set("number", 0)
+mif.set("i", 0)
+mif.set("d", 0)
+mif.set("u", 0)
+end
+
 local r = require("robotlib")
+
 local robots = {}
 local answer = nil
+
+if r.getRobots() == false then
+else
 
 print("Write ID robots:")
 local robotsID = io.read()
@@ -18,41 +40,76 @@ answer = r.connect(robots)
 for k, v in pairs(answer) do
 if v.msg == false then
     r.disconnect()
-    print("Error")
-    exit()
+    print("Error connect")
+        while true do io.read() end
   end
 end
 
+end
+
+local number = tonumber(mif.get("number"))
+local i = tonumber(mif.get("i"))
+local d = tonumber(mif.get("d"))
+local u = tonumber(mif.get("u"))
+
 while true do
+    if number == 0 then
 term.clear()
-  local vd = {}
-  answer = io.read()
+    
+    print("Write number blocks: ")
+    number = tonumber(io.read())
 
-  if answer == "exit" then
-    r.disconnect()
-    term.clear()
-    exit()
-  end
+        term.clear()
 
-  for txt in string.gmatch(answer, "%S+") do
-table.insert(vd, tonumber(txt))
-  end
+        if number == nil then
+            r.disconnect()
+    print("Error connect")
+        while true do io.read() end
+        end
 
-  for i = 1, vd[1] do
-    r.send("dgd", true)
-r.send("d", true)
-  end
+        mif.set("number", number)
+    else
 
-  for i = 1, vd[2] do
-    r.send("dg", true)
-r.send("f", true)
-  end
+    while i <= number do
 
-  for i = 1, vd[2] do
-r.send("b", true)
-  end
+            while true do
+                answer = r.send("dgd", true)
 
-  for i = 1, vd[1] do
-r.send("u", true)
-  end
+                for k, v in pairs(answer) do
+                    if v.msg == false then
+                        stop = true
+                        break
+                    end
+                end
+
+                if stop == true then
+                    break
+                end
+                r.send("d", true)
+                
+                d = d + 1
+                mif.set("d", d)
+            end
+
+            while u <= d do
+                r.send("dgu", true)
+                r.send("u", true)
+
+                u = u + 1
+                mif.set("u", u)
+            end
+            
+            i = i + 1
+            mif.set("i", i)
+        end
+number = 0
+i = 0
+d = 0
+u = 0
+        
+mif.set("number", 0)
+mif.set("i", 0)
+mif.set("d", 0)
+mif.set("u", 0)
+    end
 end
