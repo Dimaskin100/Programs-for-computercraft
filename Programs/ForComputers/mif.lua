@@ -31,8 +31,14 @@ local function check(number, name)
 end
 
 function mif.program(name)
-    if name == nil or name == "" then return false end
-    np = tostring(name)
+    if name == nil or name == "" then
+        return false
+
+    elseif not tonumber(name) == nil then
+    end
+
+    np = name
+    
     return check(2)
 end
 
@@ -43,7 +49,7 @@ function mif.get(name)
     local file = io.open(filePath, "r")
     if not file then return false end
 
-    local text = tostring(file:read("*a"))
+    local text = file:read("*a")
     
     file:close()
     return text
@@ -56,7 +62,7 @@ function mif.set(name, value)
     local file = io.open(filePath, "w")
     if not file then return false end
 
-    file:write(tostring(value))
+    file:write(value)
     file:flush()
     
     file:close()
