@@ -43,7 +43,7 @@ function mif.get(name)
     local file = io.open(filePath, "r")
     if not file then return false end
 
-    local text = file:read("*a")
+    local text = tostring(file:read("*a"))
     
     file:close()
     return text
