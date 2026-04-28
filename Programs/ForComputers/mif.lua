@@ -56,7 +56,7 @@ function mif.set(name, value)
     local file = io.open(filePath, "w")
     if not file then return false end
 
-    file:write(value)
+    file:write(tostring(value))
     file:flush()
     
     file:close()
