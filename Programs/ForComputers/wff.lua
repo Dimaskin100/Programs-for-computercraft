@@ -1,4 +1,5 @@
 term.clear()
+term.setCursorPos(1, 1)
 
 local file = io.open(arg[1], "r")
 
