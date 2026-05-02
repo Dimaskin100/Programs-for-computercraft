@@ -1,6 +1,5 @@
 term.clear()
 
-local arg = {}
 local file = io.open(arg[2], "r")
 
 if file then
